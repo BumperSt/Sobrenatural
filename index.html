@@ -57,8 +57,19 @@
 	<script type="text/javascript">
 		var pattern = 'XXYY';
 		var temporadas = {
-			'1' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT01EPXXYY.mp4',
-			'13' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer13/ondemand/SPNT13EPXXYY.mp4',
+			'1' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT01EPXXYY.mp4', //ate 21
+			'2' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT02EPXXYY.mp4', //ate 22
+			'3' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT03EPXXYY.mp4', //ate 16
+			'4' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT04EPXXYY.mp4', //ate 22
+			'5' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT05EPXXYY.mp4', //ate 22
+			'6' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT06EPXXYY.mp4', //ate 22
+			'7' : 'http://d1253j4wvfqwc4.cloudfront.net/RedeCanais/RedeCanais/RCServer04/ondemand/SPNT07EPXXYY.mp4', //ate 23
+			'8' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer05/ondemand/SPNT08EPXXYY.mp4' , //ate 23
+			'9' : 'http://d1253j4wvfqwc4.cloudfront.net/RedeCanais/RedeCanais/RCServer09/ondemand/SPNT09EPXXYY.mp4', //ate 23
+			'10' : 'http://d1253j4wvfqwc4.cloudfront.net/RedeCanais/RedeCanais/RCServer09/ondemand/SPNT10EPXXYY.mp4', //ate 23
+			'11' : 'http://d1253j4wvfqwc4.cloudfront.net/RedeCanais/RedeCanais/RCServer11/ondemand/SPNT11EPXXYY.mp4', //ate 23
+			'12' : 'http://d1253j4wvfqwc4.cloudfront.net/RedeCanais/RedeCanais/RCServer11/ondemand/SPNT12EPXXYY.mp4', //ate 23
+			'13' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer13/ondemand/SPNT13EPXXYY.mp4', //ate 23
 		}
 		var colors = {
 			'13':'#000000',
@@ -79,7 +90,7 @@
 		var primeiravez = false;
 	  	function geraLink(temp,ep){
 	  		if($(`#${temp}button${ep}`).hasClass('none')){
-	  			$('.frame').html(`<video class="videoshow" controls="" autoplay="" id="${temp}frame${ep}" name="media"><source src="${temporadas[temp].replace(pattern,String("00"+ep).slice(-2))}" type="video/mp4"></video><a class="xis" =onClick="fechavideo()">X</a>`)
+	  			$('.frame').html(`<video class="videoshow" controls="" autoplay="" id="${temp}frame${ep}" name="media"><source src="${temporadas[temp].replace(pattern,String("00"+ep).slice(-2))}" type="video/mp4"></video>`)
 	  		}else{
 	  			$(`#${temp}frame${ep}`).remove()
 	  			$(`#${temp}button${ep}`).addClass('none')
@@ -90,7 +101,14 @@
   			$('.botoes').show()
   			if(!primeiravez)
   			{
-		  		for(let i = 1;i<=23;i++)
+  				if(temp == 1)aux=21
+  				else if(temp == 2)aux=22
+  				else if(temp == 3)aux=16
+  				else if(temp == 4)aux=22
+  				else if(temp == 5)aux=22
+  				else if(temp == 6)aux=22
+  				else aux=23
+		  		for(let i = 1;i<=aux;i++)
 		  		{
 		  			$('.botoes').append(`<div class="col-lg-6 col-md-6 col-sm-12"><button style="color:white;background-color:${colors[temp]}" type="button" class="btn btn-block none tempbutton" id="${temp}button${i}" onClick="geraLink(${temp},${i})">Episodio ${i}</button></div>`)
 		  		}
