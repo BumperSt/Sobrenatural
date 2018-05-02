@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		video{
+			width:50%;
+			height: 50%;
+		}
+	</style>
+</head>
+<body>
+	
+	<button type="button" onClick="abrebotoes()">Temporada 13</button>
+
+
+	<div class="botoes"></div>
+
+
+
+
+	<div class="frame"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		var abriu = false;
+	  	function geraLink(num){
+	  		if($(`#button${num}`).hasClass('none')){
+	  			$('.frame').html(`<video controls="" autoplay="" id="frame${num}" name="media"><source src="http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer13/ondemand/SPNT13EP${String("00"+ num).slice(-2)}.mp4" type="video/mp4"></video>`)
+	  		}else{
+	  			$(`#frame${num}`).remove()
+	  			$(`#button${num}`).addClass('none')
+	  		}
+	  	}
+
+	  	function abrebotoes(){
+	  		if(!abriu){
+		  		for(var i = 1;i<=23;i++)
+		  		{
+		  			$('.botoes').append(`<button type="button" class="none" id="button${i}" onClick="geraLink(${i})">Episodio ${i}</button>`)
+		  		}
+		  		abriu = true;
+	  		}
+	  	}
+  </script>
+</body>
+</html>
