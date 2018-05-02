@@ -2,19 +2,37 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">
 		video{
 			width:50%;
 			height: 50%;
 		}
+		.tempbutton{
+			margin-top:2em;
+		}
+		.videoshow{
+	      position: fixed;
+	      top:0;
+	      left:0;
+	      z-index:1;
+	      width:20em;
+    	}
+    	.dosbotao{
+    		margin-top:2em;
+    	}
 	</style>
 </head>
 <body>
+	<div class="container">
+		<div class="row temps"></div>
+	</div>
 	
-	<button type="button" onClick="abrebotoes()">Temporada 13</button>
 
-
-	<div class="botoes"></div>
+	<div class="container">
+		<div class="row botoes"></div>
+	</div>
 
 
 
@@ -37,25 +55,59 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+		var pattern = 'XXYY';
+		var temporadas = {
+			'1' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer01/videos/SPNT01EPXXYY.mp4',
+			'13' : 'http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer13/ondemand/SPNT13EPXXYY.mp4',
+		}
+		var colors = {
+			'13':'#000000',
+			'12':'#000018',
+			'11':'#000030',
+			'10':'#000149',
+			'9':'#000161',
+			'8':'#00027a',
+			'7':'#000292',
+			'6':'#0002aa',
+			'5':'#0003c3',
+			'4':'#0003db',
+			'3':'#0004f4',
+			'2':'#3236f6',
+			'1':'#4c4ff7',
+		}
 		var abriu = false;
-	  	function geraLink(num){
-	  		if($(`#button${num}`).hasClass('none')){
-	  			$('.frame').html(`<video controls="" autoplay="" id="frame${num}" name="media"><source src="http://dtm07lg7h1lzn.cloudfront.net/RedeCanais/RedeCanais/RCServer13/ondemand/SPNT13EP${String("00"+ num).slice(-2)}.mp4" type="video/mp4"></video>`)
+		var primeiravez = false;
+	  	function geraLink(temp,ep){
+	  		if($(`#${temp}button${ep}`).hasClass('none')){
+	  			$('.frame').html(`<video class="videoshow" controls="" autoplay="" id="${temp}frame${ep}" name="media"><source src="${temporadas[temp].replace(pattern,String("00"+ep).slice(-2))}" type="video/mp4"></video><a class="xis" =onClick="fechavideo()">X</a>`)
 	  		}else{
-	  			$(`#frame${num}`).remove()
-	  			$(`#button${num}`).addClass('none')
+	  			$(`#${temp}frame${ep}`).remove()
+	  			$(`#${temp}button${ep}`).addClass('none')
 	  		}
 	  	}
 
-	  	function abrebotoes(){
-	  		if(!abriu){
-		  		for(var i = 1;i<=23;i++)
+	  	function abrebotoes(temp){
+  			$('.botoes').show()
+  			if(!primeiravez)
+  			{
+		  		for(let i = 1;i<=23;i++)
 		  		{
-		  			$('.botoes').append(`<button type="button" class="none" id="button${i}" onClick="geraLink(${i})">Episodio ${i}</button>`)
+		  			$('.botoes').append(`<div class="col-lg-6 col-md-6 col-sm-12"><button style="color:white;background-color:${colors[temp]}" type="button" class="btn btn-block none tempbutton" id="${temp}button${i}" onClick="geraLink(${temp},${i})">Episodio ${i}</button></div>`)
 		  		}
-		  		abriu = true;
+		  		primeiravez = true;
+	  		}else{
+	  			$('.botoes').empty()
+	  			primeiravez = false
+	  			abrebotoes(temp)
 	  		}
 	  	}
+
+	  	$(function(){
+	  		for(let i = 1;i<=13;i++){
+	  		$('.temps').append(`<div class="col-lg-3 col-md-4 col-sm-12"><button type="button" class="btn btn-block tempbutton" style="color:white;background-color:${colors[i]}" onClick="abrebotoes(${i})">Temporada ${i}</button></div>`)
+	  	}
+
+	  	})
   </script>
 </body>
 </html>
